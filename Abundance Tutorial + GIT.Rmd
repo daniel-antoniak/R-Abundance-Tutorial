@@ -7,3 +7,40 @@ date: "2026-06-10"
 ```{r}
 library(unmarked)
 ```
+```{r}
+detection_history <- read.csv("detection_history.csv", row.names = "X")
+# first column ("X") has row names but no data
+
+# data overview
+head(detection_history)
+```
+
+```{r}
+#Create and unmarked frame occupancy that holds the data using unmarked
+sample.unmarkedFrame_simple <- unmarkedFrameOccu(y = as.matrix(detection_history)) 
+# y is a matrix with observed detection history 
+# (0's and 1's, one row per site, one column per survey) 
+# S4 class for occupancy model data
+summary(sample.unmarkedFrame_simple)
+```
+```{r}
+#Build basic single-season occupancy model with intercepts only (one estimate for detection, one for occupancy)
+occu.ml <- occu(formula = ~1 # detection formula first
+                ~1, # occupancy formula second, 
+                data = sample.unmarkedFrame_simple)
+
+summary(occu.ml)
+```
+```{r}
+predict(occu.ml,
+        newdata = data.frame(site = 1),
+        type = "state")
+```
+```{r}
+predict(occu.ml,
+        newdata = data.frame(site = 1),
+        type = "det")
+```
+```{r}
+
+```
