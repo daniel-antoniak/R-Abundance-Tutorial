@@ -1,0 +1,9 @@
+---
+title: "Abundance Tutorial (unmarked)"
+output: html_document
+date: "2026-06-10"
+---
+
+```{r}
+library(unmarked)
+```
